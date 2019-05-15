@@ -1,6 +1,4 @@
-FROM nebo15/alpine-postgre:pglogical
-MAINTAINER Nebo#15 <support@nebo15.com>
-
+FROM postgres:11.3-alpine
 # Important! Update this no-op ENV variable when this Dockerfile
 # is updated with the current date. It will force refresh of all
 # of the base images and things like `apt-get update` won't be using
@@ -9,7 +7,7 @@ ENV REFRESHED_AT=2017-05-16 \
     LANG=en_US.UTF-8 \
     TERM=xterm \
     HOME=/ \
-    CONFD_VERSION=0.12.0-alpha3 \
+    CONFD_VERSION=0.14.0 \
     PGHOARD_VERSION=f38b187 \
     PGHOARD_BASEBACKUP_COUNT=7 \
     PGHOARD_BASEBACKUP_INTERVAL_HOURS=24 \
@@ -41,9 +39,8 @@ RUN set -ex; \
         g++ && \
     python3 -m ensurepip && \
     pip3 install --upgrade pip setuptools && \
-    pip3 install boto azure google google-api-python-client cryptography https://github.com/ohmu/pghoard/archive/master.zip && \
-    apk del .build-deps && \
-    rm -r /var/cache/apk/*
+    pip3 install boto azure google google-api-python-client cryptography oauth2client https://github.com/ohmu/pghoard/archive/master.zip && \
+    apk del .build-deps 
 
 COPY conf.d /etc/confd/conf.d
 COPY templates /etc/confd/templates

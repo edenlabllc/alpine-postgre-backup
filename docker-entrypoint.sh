@@ -1,6 +1,7 @@
 #!/bin/sh
 set -e
-
+mkdir -p /var/lib/postgresql/data/restore/ 
+echo '11.3' > /var/lib/postgresql/data/restore/PG_VERSION
 echo "Resolving backups sites.."
 HOSTS_URLS=(${PG_HOSTS//;/ })
 
